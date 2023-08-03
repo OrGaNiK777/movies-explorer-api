@@ -11,9 +11,9 @@ const getMovies = (req, res, next) => Movie.find({})//.populate(['likes', 'owner
   .catch(next);
 
 const postMovies = (req, res, next) => {
-  const { country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId } = req.body;
-  //const owner = req.user.id;
-  Movie.create({ country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId })
+  const { country, director, duration, year, description, image, trailerLink, nameRU, nameEN, thumbnail, movieId} = req.body;
+  const owner = req.user.id;
+  Movie.create({ country, director, duration, year, description, image, trailerLink, nameRU, nameEN, thumbnail, movieId, owner, })
     .then((newMovie) => res.status(httpConstants.HTTP_STATUS_CREATED).send(newMovie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
