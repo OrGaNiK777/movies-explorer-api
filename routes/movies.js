@@ -4,7 +4,7 @@ const { celebrate, Joi } = require('celebrate');
 const {
   getMovies,
   postMovies,
-  deleteMoviesById
+  deleteMoviesById,
 } = require('../controllers/movies');
 
 router.get('/movies', getMovies);

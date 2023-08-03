@@ -11,11 +11,10 @@ const getUser = (req, res, next) => {
     .orFail(new NotFoundError(`Пользователь c id: ${id} не найден`))
     .then((user) => { res.status(httpConstants.HTTP_STATUS_OK).send(user); })
     .catch(next);
-}
+};
 
 const patchUser = (req, res, next) => {
   const newUser = req.body;
-  console.log(newUser)
   const { id } = req.user;
   return User.findByIdAndUpdate(id, newUser, {
     new: true,
@@ -38,5 +37,5 @@ const signOut = (req, res) => {
 module.exports = {
   getUser,
   patchUser,
-  signOut
+  signOut,
 };

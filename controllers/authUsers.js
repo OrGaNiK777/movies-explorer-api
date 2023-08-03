@@ -47,5 +47,5 @@ const createUser = (req, res, next) => {
 
 module.exports = {
   login,
-  createUser
+  createUser,
 };
