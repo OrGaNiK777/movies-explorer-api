@@ -6,7 +6,7 @@ const NotFoundError = require('../errors/not-found-error');
 const BadRequestError = require('../errors/bad-request-error');
 const ForbiddenError = require('../errors/forbidden-error');
 
-const getMovies = (req, res, next) => Movie.find({})// .populate(['likes', 'owner'])
+const getMovies = (req, res, next) => Movie.find({})
   .then((movies) => res.status(httpConstants.HTTP_STATUS_OK).send(movies))
   .catch(next);
 
