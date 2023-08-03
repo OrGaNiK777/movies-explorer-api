@@ -7,7 +7,7 @@ const BadRequestError = require('../errors/bad-request-error');
 
 const getUser = (req, res, next) => User.find({})
   .then((user) => res.status(httpConstants.HTTP_STATUS_OK)
-    .send(user)).catch(next);
+    .send({ email: user.email })).catch(next);
 
 const patchUser = (req, res, next) => {
   const newUser = req.body;
