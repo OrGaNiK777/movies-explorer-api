@@ -5,9 +5,13 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/not-found-error');
 const BadRequestError = require('../errors/bad-request-error');
 
-const getUser = (req, res, next) => User.find({})
-  .then((user) => res.status(httpConstants.HTTP_STATUS_OK)
-    .send(user)).catch(next);
+const getUser = (req, res, next) => {
+  const { id } = req.user;
+  User.findById(id)
+    .orFail(new NotFoundError(`Пользователь c id: ${id} не найден`))
+    .then((user) => { res.status(httpConstants.HTTP_STATUS_OK).send(user); })
+    .catch(next);
+}
 
 const patchUser = (req, res, next) => {
   const newUser = req.body;
