@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
 const { generateToken } = require('../utils/jwt');
-const { saltRounds } = require('../utils/consctants');
+const { SALT_ROUNDS } = require('../utils/consctants');
 
 const ConflictError = require('../errors/conflict-error');
 const NotAuthError = require('../errors/not-auth-error');
@@ -29,7 +29,7 @@ const createUser = (req, res, next) => {
   const {
     email, password, name,
   } = req.body;
-  bcrypt.hash(password, saltRounds)
+  bcrypt.hash(password, SALT_ROUNDS)
     .then((hash) => User.create({
       name, email, password: hash,
     }))
