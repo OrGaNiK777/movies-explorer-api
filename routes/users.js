@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const { celebrate, Joi } = require('celebrate');
+
+const { patchUserValid } = require('../validations/validation');
 
 const {
   getUser,
@@ -9,12 +10,7 @@ const {
 
 router.get('/users/me', getUser);
 
-router.patch('/users/me', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    name: Joi.string().required().min(2).max(30),
-  }),
-}), patchUser);
+router.patch('/users/me', patchUserValid, patchUser);
 
 router.delete('/signout', signOut);
 

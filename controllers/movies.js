@@ -6,19 +6,41 @@ const NotFoundError = require('../errors/not-found-error');
 const BadRequestError = require('../errors/bad-request-error');
 const ForbiddenError = require('../errors/forbidden-error');
 
-const getMovies = (req, res, next) => Movie.find({})
-  .then((movies) => res.status(httpConstants.HTTP_STATUS_OK).send(movies))
-  .catch(next);
+function getMovieCurrentUser(req, res, next) {
+  const { id } = req.user;
+  Movie.find({ owner: id })
+    .then((movies) => { res.status(httpConstants.HTTP_STATUS_OK).send(movies); })
+    .catch(next);
+}
 
 const postMovies = (req, res, next) => {
   const {
-    // eslint-disable-next-line max-len
-    country, director, duration, year, description, image, trailerLink, nameRU, nameEN, thumbnail, movieId,
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    nameRU,
+    nameEN,
+    thumbnail,
+    movieId,
   } = req.body;
   const owner = req.user.id;
   Movie.create({
-    // eslint-disable-next-line max-len
-    country, director, duration, year, description, image, trailerLink, nameRU, nameEN, thumbnail, movieId, owner,
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    nameRU,
+    nameEN,
+    thumbnail,
+    movieId,
+    owner,
   })
     .then((newMovie) => res.status(httpConstants.HTTP_STATUS_CREATED).send(newMovie))
     .catch((err) => {
@@ -39,18 +61,18 @@ const deleteMoviesById = (req, res, next) => {
         return movie.deleteOne()
           .then(res.status(httpConstants.HTTP_STATUS_OK).send({ message: 'Фильм удален' }));
       }
-      return next(new ForbiddenError('Вы не можете удалять чужие карточки'));
+      return next(new ForbiddenError('Вы пытаетесь удалить чужой фильм'));
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return next(new BadRequestError('Переданы некорректные данные для удаления карточки'));
+        return next(new BadRequestError('Переданы некорректные данные для удаления фильма'));
       }
       return next(err);
     });
 };
 
 module.exports = {
-  getMovies,
+  getMovieCurrentUser,
   postMovies,
   deleteMoviesById,
 };

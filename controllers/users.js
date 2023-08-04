@@ -4,6 +4,7 @@ const User = require('../models/user');
 
 const NotFoundError = require('../errors/not-found-error');
 const BadRequestError = require('../errors/bad-request-error');
+const ConflictError = require('../errors/conflict-error');
 
 const getUser = (req, res, next) => {
   const { id } = req.user;
@@ -20,9 +21,12 @@ const patchUser = (req, res, next) => {
     new: true,
     runValidators: true,
   })
-    .orFail(new NotFoundError(`Пользователь по id  ${req.user._id} не найден`))
+    .orFail(new NotFoundError(`Пользователь c id  ${req.user._id} не найден`))
     .then((user) => res.status(httpConstants.HTTP_STATUS_OK).send(user))
     .catch((err) => {
+      if (err.name === 'MongoServerError' && err.code === 11000) {
+        return next(new ConflictError(`Пользователь с Email ${req.body.email} уже существует`));
+      }
       if (err.name === 'ValidationError') {
         return next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(' and ')}`));
       }
