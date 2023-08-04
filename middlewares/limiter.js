@@ -1,10 +1,10 @@
 const rateLimit = require('express-rate-limit');
 
-const configDefault = require('../utils/consctants');
+const consctants = require('../utils/consctants');
 
 const {
-  LIMITER_WINDOW = configDefault.LIMITER_WINDOW,
-  LIMITER_MAX_LIMIT = configDefault.LIMITER_MAX_LIMIT,
+  LIMITER_WINDOW = consctants.LIMITER_WINDOW,
+  LIMITER_MAX_LIMIT = consctants.LIMITER_MAX_LIMIT,
 } = process.env;
 
 const limiter = rateLimit({
