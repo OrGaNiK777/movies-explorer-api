@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 
 const { limiter } = require('./middlewares/limiter');
-const { PORT, host } = require('./utils/consctants');
+const { PORT, HOST } = require('./utils/consctants');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routes = require('./routes/index');
 const customErrorsHandler = require('./middlewares/customErrorsHandler');
@@ -12,7 +12,7 @@ const customErrorsHandler = require('./middlewares/customErrorsHandler');
 const app = express();
 
 mongoose
-  .connect(`mongodb://${host}:27017/bitfilmsdb`, {
+  .connect(`mongodb://${HOST}:27017/bitfilmsdb`, {
     useNewUrlParser: true,
     family: 4,
   })
@@ -37,7 +37,7 @@ app.use(errorLogger);
 
 app.use(customErrorsHandler);
 
-app.listen(PORT, host, () => {
+app.listen(PORT, HOST, () => {
   // eslint-disable-next-line no-console
-  console.log(`Cервер запущен на http://${host}:${PORT}/`);
+  console.log(`Cервер запущен на http://${HOST}:${PORT}/`);
 });
