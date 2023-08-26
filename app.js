@@ -32,6 +32,8 @@ app.use(limiter);
 
 app.use(helmet());
 
+app.use(cors);
+
 app.use(cookieParser());
 
 app.use(routes);
