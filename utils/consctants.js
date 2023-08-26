@@ -1,6 +1,6 @@
 const { HOST = 'localhost' } = process.env;
 
-const { PORT = 3000 } = process.env;
+const { PORT = 4000 } = process.env;
 
 const SALT_ROUNDS = 10;
 

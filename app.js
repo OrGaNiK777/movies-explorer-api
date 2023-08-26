@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 
+const cors = require('./middlewares/cors');
 const { limiter } = require('./middlewares/limiter');
 const { PORT, HOST } = require('./utils/consctants');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -24,6 +25,8 @@ mongoose
 app.use(express.json());
 
 app.use(requestLogger);
+
+app.use(cors);
 
 app.use(limiter);
 
