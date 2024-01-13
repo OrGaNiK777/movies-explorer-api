@@ -3,13 +3,6 @@ const allowedCors = [
   'http://localhost:3000',
   'localhost:4000',
   'http://localhost:4000',
-  "http://movies.exporer.diplom.nomoreparties.co",
-  "http://api.movies.exporer.diplom.nomoreparties.co",
-  "https://movies.exporer.diplom.nomoreparties.co",
-  "https://api.movies.exporer.diplom.nomoreparties.co",
-  "movies.exporer.diplom.nomoreparties.co",
-  "api.movies.exporer.diplom.nomoreparties.co"
-
 ];
 
 module.exports = (req, res, next) => {
